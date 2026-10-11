@@ -1,0 +1,73 @@
+{
+  "version": "0.2.0-preview",
+  "checked_on": "2026-10-12",
+  "windows": {
+    "status": "ISOLATED_TESTED",
+    "build": "Native WinForms GUI and independent CLI compiled with system .NET Framework compiler.",
+    "checks": [
+      "test.ps1: 8 core, 4 GUI/storage and 7 in-process CLI checks passed (19 total).",
+      "Core/FileDrop: exact UTF-8, immutable snapshots, filename containment, absolute existing file objects, cache behavior.",
+      "GUI/storage: >1 million Unicode characters, latest edit, MD/TXT, restart recovery, corrupt UTF-8 backup plus new-draft recovery, actual Windows ACL write denial and retry.",
+      "Common subprocess suite: 5 groups passed, including >1 MB Chinese/Japanese/emoji UTF-8, CRLF/LF, MD/TXT, unsafe names, invalid input and duplicate-option failures."
+    ],
+    "clipboard": "PASS: actual desktop text clipboard to native CLI, exact UTF-8 bytes, clipboard unchanged; no content printed or packaged.",
+    "native_mouse_drag": "USER_REPORTED on earlier PasteDrop build; renamed build native mouse/browser acceptance NOT_RUN.",
+    "footprint": {
+      "scope": "Local Windows renamed-build measurement, 2026-10-12; not CI timings or a guarantee for every machine. Executable sizes exclude system .NET.",
+      "gui_bytes": 18944,
+      "cli_bytes": 11264,
+      "runs": [
+        {
+          "scope": "isolated empty WinForms GUI, native handles and message loop, invisible test window; includes probe and .NET",
+          "readyMs": 172,
+          "workingSetBytes": 48349184,
+          "privateBytes": 28516352
+        },
+        {
+          "scope": "isolated empty WinForms GUI, native handles and message loop, invisible test window; includes probe and .NET",
+          "readyMs": 124,
+          "workingSetBytes": 48001024,
+          "privateBytes": 28495872
+        },
+        {
+          "scope": "isolated empty WinForms GUI, native handles and message loop, invisible test window; includes probe and .NET",
+          "readyMs": 108,
+          "workingSetBytes": 47955968,
+          "privateBytes": 28467200
+        }
+      ]
+    },
+    "storage": "Portable GUI stores beside executable, location visible, no silent fallback. CLI defaults to Documents/PromptSlip/files. Save errors are reported; attachments retained."
+  },
+  "macos": {
+    "implementation": "AppKit GUI/CLI; minimum 11.0 configured; universal, arm64 and x86_64 build options.",
+    "corrupt_draft_fix": "IMPLEMENTED: preserve invalid UTF-8 bytes in unique backup, then allow a new draft. Shared storage two-process load/save/restart regression prepared, NOT_RUN.",
+    "build": "NOT_RUN",
+    "cli": "NOT_RUN",
+    "storage_test": "NOT_RUN",
+    "gui_drag": "NOT_RUN",
+    "blocker": "No Mac host or Apple SDK. Configured minimum OS version has not been runtime-validated.",
+    "signing": "No Developer ID signing or notarization; operating-system warnings/restrictions apply.",
+    "legacy_data": "IMPLEMENTED: safe exclusive copy of historical PasteDrop draft; source untouched, current draft wins; invalid copied bytes preserved separately. Native test execution pending CI."
+  },
+  "linux": {
+    "implementation": "GTK3 GUI/CLI; immutable real-file URI attachments; draft recovery.",
+    "build": "NOT_RUN",
+    "cli": "NOT_RUN",
+    "xvfb_smoke": "NOT_RUN",
+    "x11_desktop_drag": "NOT_RUN",
+    "wayland_desktop_drag": "NOT_RUN",
+    "blocker": "WSL and VirtualMachinePlatform installation require Windows restart; no distro. Docker server query timed out after 8 seconds; no restart performed.",
+    "prepared_test": "Xvfb GTK URI receiver, latest editor drag, normal WM_DELETE_WINDOW close flushing a pending edit. Test fixture uses X11; this is not browser or Wayland acceptance.",
+    "legacy_data": "IMPLEMENTED: safe exclusive copy of historical pastedrop draft; source untouched, current draft wins; new edits can use separate recovery files on legacy read failure. Native test execution pending CI."
+  },
+  "shared": {
+    "shell_syntax": "Git Bash bash -n: PASS for all macOS/Linux shell scripts; not native compilation.",
+    "browser_upload": "NOT_RUN on all platforms; destination must accept files and model/context limits still apply.",
+    "ci": "Public repository created. Native workflow execution pending first source push; no CI pass claimed yet.",
+    "package": "Explicit file allowlists; ZIP byte/integrity, local Markdown links, shell mode/LF, bounded privacy scan. Final hashes are in external SHA256SUMS.txt.",
+    "publication": "User explicitly authorized renaming, public source push, CI and v0.2.0-preview publication on 2026-10-12. Release pending validation.",
+    "decision": "Publish Windows preview after fresh tests/package checks; macOS/Linux assets only if corresponding native CI passes, always Experimental until desktop acceptance."
+  },
+  "project": "PromptSlip — Lightweight AI Prompt File Transfer"
+}

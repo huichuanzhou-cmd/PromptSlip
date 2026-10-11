@@ -1,0 +1,97 @@
+name: Native builds and acceptance
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build, test and package Windows preview
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          ./build.ps1
+          ./test.ps1
+          python tests/cli_acceptance.py ./PromptSlip.Cli.exe
+          if ($LASTEXITCODE -ne 0) { throw 'Subprocess acceptance failed.' }
+          ./measure-windows.ps1 | Set-Content footprint-windows.json
+          python package.py --output-dir dist
+          if ($LASTEXITCODE -ne 0) { throw 'Packaging/link/privacy check failed.' }
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: PromptSlip-0.2.0-Windows-preview
+          path: |
+            dist/PromptSlip-v0.2.0-preview-Windows.zip
+            dist/SHA256SUMS.txt
+            footprint-windows.json
+          if-no-files-found: error
+  linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential pkg-config libgtk-3-dev libx11-dev xvfb xauth xdotool
+      - name: Build and test
+        run: |
+          sh linux/build.sh
+          sh linux/test-cli.sh linux/build/promptslip
+          python3 tests/cli_acceptance.py linux/build/promptslip
+          sh linux/smoke-gui.sh linux/build/promptslip
+          ldd linux/build/promptslip > linux/build/dependencies.txt
+          tar -czf linux/build/PromptSlip-v0.2.0-preview-Linux-x86_64.tar.gz -C linux/build promptslip dependencies.txt -C ../.. LICENSE -C linux README.md
+          sha256sum linux/build/PromptSlip-v0.2.0-preview-Linux-x86_64.tar.gz > linux/build/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: PromptSlip-0.2.0-Linux-x86_64-preview
+          path: |
+            linux/build/PromptSlip-v0.2.0-preview-Linux-x86_64.tar.gz
+            linux/build/SHA256SUMS.txt
+          if-no-files-found: error
+  macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15-intel
+            native_arch: x86_64
+          - runner: macos-15
+            native_arch: arm64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build universal app and test native host
+        run: |
+          test "$(uname -m)" = "${{ matrix.native_arch }}"
+          PROMPTSLIP_ARCHS=universal sh macos/build.sh
+          lipo -verify_arch arm64 x86_64 macos/build/PromptSlip.app/Contents/MacOS/PromptSlip
+          sh macos/test-draft.sh
+          sh macos/acceptance.sh macos/build/promptslip
+          python3 tests/cli_acceptance.py macos/build/promptslip
+          otool -L macos/build/PromptSlip.app/Contents/MacOS/PromptSlip > macos/build/dependencies.txt
+          mkdir -p macos/build/release/PromptSlip
+          ditto macos/build/PromptSlip.app macos/build/release/PromptSlip/PromptSlip.app
+          cp LICENSE macos/README.md macos/build/dependencies.txt macos/build/release/PromptSlip/
+          ln -s PromptSlip.app/Contents/MacOS/PromptSlip macos/build/release/PromptSlip/promptslip
+          ditto -c -k --keepParent macos/build/release/PromptSlip macos/build/PromptSlip-v0.2.0-preview-macOS-universal.zip
+          shasum -a 256 macos/build/PromptSlip-v0.2.0-preview-macOS-universal.zip > macos/build/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: PromptSlip-0.2.0-macOS-universal-tested-on-${{ matrix.native_arch }}
+          path: |
+            macos/build/PromptSlip-v0.2.0-preview-macOS-universal.zip
+            macos/build/SHA256SUMS.txt
+            macos/build/dependencies.txt
+          if-no-files-found: error

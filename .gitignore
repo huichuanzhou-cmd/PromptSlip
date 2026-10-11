@@ -1,0 +1,20 @@
+# Runtime data: never publish prompts, drafts, or generated attachments.
+**/数据/
+**/文件/
+**/work/
+dist/
+*.exe
+*.zip
+*.pdb
+*.tmp
+.vs/
+bin/
+obj/
+macos/build/
+linux/build/
+**/__pycache__/
+*.pyc
+*.tar.gz
+*.tmp-*
+footprint-windows.json
+SHA256SUMS.txt
