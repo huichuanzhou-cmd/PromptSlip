@@ -30,7 +30,7 @@ timeout 45s xvfb-run -a sh -eu -c '
   [ -n "$appw" ] && [ -n "$recvw" ] || { cat "$PROMPTSLIP_LOG" >&2; exit 1; }
   for i in $(seq 1 50); do [ -f "$XDG_DATA_HOME/promptslip/draft.txt" ] && break; sleep 0.1; done
   cmp "$XDG_DATA_HOME/pastedrop/draft.txt" "$XDG_DATA_HOME/promptslip/draft.txt"
-  test "$(cat "$XDG_DATA_HOME/pastedrop/draft.txt")" = 'legacy Linux draft'
+  test "$(cat "$XDG_DATA_HOME/pastedrop/draft.txt")" = "legacy Linux draft"
   xdotool windowmove "$appw" 0 0
   xdotool windowmove "$recvw" 800 200
   xdotool windowfocus --sync "$appw"

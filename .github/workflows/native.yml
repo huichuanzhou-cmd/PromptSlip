@@ -76,7 +76,7 @@ jobs:
         run: |
           test "$(uname -m)" = "${{ matrix.native_arch }}"
           PROMPTSLIP_ARCHS=universal sh macos/build.sh
-          lipo -verify_arch arm64 x86_64 macos/build/PromptSlip.app/Contents/MacOS/PromptSlip
+          lipo macos/build/PromptSlip.app/Contents/MacOS/PromptSlip -verify_arch arm64 x86_64
           sh macos/test-draft.sh
           sh macos/acceptance.sh macos/build/promptslip
           python3 tests/cli_acceptance.py macos/build/promptslip
