@@ -21,7 +21,9 @@ def main():
             assert proc.returncode == 0, proc.stderr.decode("utf-8", "replace")
             assert proc.stderr == b"", proc.stderr
             path = pathlib.Path(proc.stdout.decode("utf-8").rstrip("\r\n"))
-            assert path.is_absolute() and path.parent == root and path.is_file(), path
+            # macOS may report /var while Python resolves the same directory as /private/var.
+            # Compare the actual target directory, retaining absolute-path/file containment checks.
+            assert path.is_absolute() and path.resolve(strict=True).parent == root and path.is_file(), path
             assert path.read_bytes() == data, "file changed or truncated"
             return path
 
