@@ -1,27 +1,29 @@
-# PromptSlip 0.2.0-preview
+# PromptSlip v0.2.0-preview
 
-**Paste. Drag. Done.** Turn long AI prompts into drag-and-drop Markdown or TXT attachments. PromptSlip runs locally and needs no account, API, or browser runtime. It creates a file on your device; you choose whether and where to attach or send it.
+**Paste. Drag. Done.** Turn long AI prompts into drag-and-drop Markdown or TXT attachments. Lightweight, native, and fully local.
 
-## Quick start
+## Downloads
 
-On Windows, run `PromptSlip.exe`, paste and review your text, then drag the file card to a destination that accepts attachments. Markdown (`.md`) is the default; TXT (`.txt`) is optional. The GUI currently uses Simplified Chinese labels. ChatGPT, Claude, Kimi, and AI coding tools are example scenarios, not tested integrations.
+Use [GitHub Releases](https://github.com/huichuanzhou-cmd/PromptSlip/releases) for the Windows portable ZIP, source ZIP, SHA256SUMS.txt and explicitly Experimental macOS Universal / Linux x86_64 builds.
 
-The public repository is [github.com/huichuanzhou-cmd/PromptSlip](https://github.com/huichuanzhou-cmd/PromptSlip). The [Releases page](https://github.com/huichuanzhou-cmd/PromptSlip/releases) is the download entry point; it currently has no published package assets.
+## Verified scope
 
-## Preview status
+[All four native CI jobs passed](https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38183554014) at source commit `b7159478c010650c96c9dd2def2fdaab9e4e75bb`:
 
-- **Windows:** The renamed GUI/CLI compiled on 2026-10-12 and passed 19 core/GUI/CLI checks, 5 real subprocess groups and an actual read-only clipboard test. Earlier PasteDrop drag success is user-reported; native mouse/browser upload testing of the renamed build is not run. See [verification.json](verification.json).
-- **macOS:** Experimental / Preview. AppKit source is present. Native build and runtime checks are `NOT_RUN` unless a later dated validation record says otherwise. The preview is unsigned and not notarized.
-- **Linux:** Experimental / Preview. GTK 3 source is present. Native build and runtime checks are `NOT_RUN` unless a later dated validation record says otherwise. GTK 3 runtime libraries are required; X11 and Wayland behavior is unverified.
+- Windows: GUI/CLI compile, 19 core/GUI/CLI checks, 5 real subprocess groups, package/link/privacy checks. Actual read-only desktop clipboard testing also passed locally.
+- macOS Intel and Apple Silicon: Universal arm64/x86_64 build, slice checks, native CLI and corrupted-draft/two-process recovery plus safe legacy migration tests.
+- Linux Ubuntu 24.04 x86_64: GTK3 build, CLI and Xvfb URI-list drag/normal-close draft smoke.
 
-An attachment does not expand a model's context window, and a successful upload would not prove that the service read the full file. Keep critical instructions in the prompt itself and request confirmation when completeness matters.
+This is a pre-release. Renamed-build real desktop/browser drag acceptance remains unverified; Linux Xvfb is a synthetic receiver test, not Wayland/browser acceptance. macOS has no Developer ID signing/notarization; do not disable security controls. Minimum macOS 11 is configured, not runtime-tested. Linux needs GTK3 and system libraries; older distributions are unverified. Windows uses system .NET Framework 4.x and currently has Chinese GUI labels.
 
-## Local storage and compatibility
+## Changes
 
-Drafts and attachments are plaintext files stored locally. The Windows GUI keeps `数据/` and `文件/` beside the portable app; a read-only location produces a visible error and is not silently redirected to LocalAppData. The CLI default is `Documents/PromptSlip/files`, separate from the GUI folder. Existing Windows portable data remains in its current folder, and changing the CLI default does not move or delete older `PasteDrop` data.
+- Renamed PasteDrop to PromptSlip across native programs, CLI, scripts, assets, metadata and bilingual documentation.
+- Preserved old portable Windows data; safely copied legacy Mac/Linux drafts only when the new draft is absent. Old attachments remain untouched.
+- Preserved corrupt draft bytes while allowing fresh edits to recover; tested Windows write-denial and retry.
+- Fixed CI lipo argument order, GTK smoke quoting and equivalent macOS path handling in the acceptance test; Git shell scripts are executable.
+- Kept Markdown default, optional TXT, plaintext local drafts and immutable exports. No API/account/cloud/browser runtime/telemetry added.
 
-## Build and verification
+The destination must accept files. File attachments do not increase model context or guarantee full ingestion. CLI output is a path, not an upload.
 
-See [docs/DOWNLOADS.md](docs/DOWNLOADS.md) for source builds and platform requirements. The validation record preserves the scope and date of earlier checks. The local renamed Windows build passed the checks above. Native CI is pending the first source push; no CI PASS is claimed yet.
-
-License: [MIT](LICENSE). See [CHANGELOG.md](CHANGELOG.md) for the project history.
+License: [MIT](https://github.com/huichuanzhou-cmd/PromptSlip/blob/main/LICENSE), copyright 2026 huichuanzhou-cmd.

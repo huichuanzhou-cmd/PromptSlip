@@ -1,10 +1,10 @@
 # Downloads and source builds
 
-## Download availability
+## Downloads
 
-The public repository is [huichuanzhou-cmd/PromptSlip](https://github.com/huichuanzhou-cmd/PromptSlip). The [Releases page](https://github.com/huichuanzhou-cmd/PromptSlip/releases) is the download entry point, but it currently has no published release assets. The repository was created separately from this staging checkout and is currently empty; source code and local builds are not downloadable from it yet. Do not treat a local executable as a public release.
+[Download v0.2.0-preview](https://github.com/huichuanzhou-cmd/PromptSlip/releases) from the public [PromptSlip repository](https://github.com/huichuanzhou-cmd/PromptSlip). Choose the Windows portable ZIP, source ZIP or explicitly Experimental macOS Universal / Linux x86_64 build. Verify the archive with the accompanying SHA256SUMS.txt.
 
-For now, obtain the source tree from the person or workspace that provided this project. No public source archive or binary package is available yet. Add direct asset links only after checking an actual published Release and its assets.
+Windows: unzip and run PromptSlip.exe. macOS: no Developer ID signing/notarization, so launch restrictions may apply; do not disable security controls. Linux: built on Ubuntu 24.04, requires GTK3/system libraries; older distributions and Wayland desktop acceptance are unverified.
 
 ## Windows portable build
 
@@ -30,7 +30,7 @@ The GUI writes `数据/` and `文件/` next to `PromptSlip.exe`. Put the portabl
 
 ## macOS preview build
 
-The source includes an AppKit implementation and build script. Native Mac compilation and runtime checks are `NOT_RUN` unless a later dated validation record says otherwise. On a Mac with Apple Command Line Tools, the source build command is:
+The source includes an AppKit implementation and build script. Native Intel/arm64 CI passed build, CLI and storage tests; AppKit desktop drag remains unverified. On a Mac with Apple Command Line Tools, the source build command is:
 
 ```sh
 sh macos/build.sh
@@ -43,7 +43,7 @@ The app targets macOS 11 or newer and the build script requests Intel and Apple 
 
 ## Linux preview build
 
-The source includes a GTK 3 implementation. Native Linux compilation and runtime checks are `NOT_RUN` unless a later dated validation record says otherwise. A C compiler, `pkg-config`, GTK 3 development files, and GTK 3 runtime libraries are required. The available source commands are:
+The source includes a GTK 3 implementation. Native Ubuntu 24.04 CI passed build, CLI and Xvfb smoke; real desktop/browser acceptance remains unverified. A C compiler, `pkg-config`, GTK 3 development files, and GTK 3 runtime libraries are required. The available source commands are:
 
 ```sh
 sh linux/build.sh
@@ -56,4 +56,4 @@ The GTK runtime requires system dynamic libraries. X11 and Wayland behavior has 
 
 ## What verification means
 
-See [`../verification.json`](../verification.json) for the dated outcomes and their limits. Windows isolated tests are not a real-browser upload test. macOS and Linux source presence and shell syntax checks do not establish that either platform builds or runs. Browser upload, attachment limits, and whether a model reads the entire file remain dependent on the destination service. The latest documentation-only update does not claim that CI or newly built binaries have passed.
+See [`../verification.json`](../verification.json) for the dated outcomes and their limits. Windows isolated tests are not a real-browser upload test. macOS/Linux native CI results are scoped in the current verification record; desktop testing remains separate. Browser upload, attachment limits, and whether a model reads the entire file remain dependent on the destination service. The latest documentation-only update does not claim that CI or newly built binaries have passed.

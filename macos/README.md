@@ -1,5 +1,7 @@
 # PromptSlip for macOS
 
+**Experimental.** Native Intel and arm64 CI passed Universal build, CLI and draft-storage tests. AppKit desktop drag is unverified; no Developer ID signing or notarization. [CI evidence](https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38183554014).
+
 PromptSlip is a small AppKit app and command-line tool. It uses only Apple frameworks and system utilities.
 
 ## Use a built release package

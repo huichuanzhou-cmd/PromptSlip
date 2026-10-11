@@ -37,37 +37,68 @@
         }
       ]
     },
-    "storage": "Portable GUI stores beside executable, location visible, no silent fallback. CLI defaults to Documents/PromptSlip/files. Save errors are reported; attachments retained."
+    "storage": "Portable GUI stores beside executable, location visible, no silent fallback. CLI defaults to Documents/PromptSlip/files. Save errors are reported; attachments retained.",
+    "ci": "PASS: GUI/CLI native build, 19 checks, 5 subprocess groups and packaging checks."
   },
   "macos": {
     "implementation": "AppKit GUI/CLI; minimum 11.0 configured; universal, arm64 and x86_64 build options.",
-    "corrupt_draft_fix": "IMPLEMENTED: preserve invalid UTF-8 bytes in unique backup, then allow a new draft. Shared storage two-process load/save/restart regression prepared, NOT_RUN.",
-    "build": "NOT_RUN",
-    "cli": "NOT_RUN",
-    "storage_test": "NOT_RUN",
+    "corrupt_draft_fix": "PASS on Intel and arm64 native CI: damaged bytes retained, new edits saved, second-process recovery and corrupt legacy migration verified.",
+    "build": "PASS: Universal arm64/x86_64 build and slice verification on both native macOS 15 hosts.",
+    "cli": "PASS: platform acceptance and 5 common subprocess groups on Intel and arm64.",
+    "storage_test": "PASS: corrupt draft two-process recovery, safe legacy copy, target precedence and corrupt legacy handling.",
     "gui_drag": "NOT_RUN",
-    "blocker": "No Mac host or Apple SDK. Configured minimum OS version has not been runtime-validated.",
+    "blocker": null,
     "signing": "No Developer ID signing or notarization; operating-system warnings/restrictions apply.",
-    "legacy_data": "IMPLEMENTED: safe exclusive copy of historical PasteDrop draft; source untouched, current draft wins; invalid copied bytes preserved separately. Native test execution pending CI."
+    "legacy_data": "PASS: legacy source preserved, new draft preferred, corrupt copied bytes retained and fresh edits save.",
+    "status": "EXPERIMENTAL_NATIVE_CI_TESTED",
+    "clipboard": "Actual desktop clipboard NOT_RUN; stdin and argument/error paths passed."
   },
   "linux": {
     "implementation": "GTK3 GUI/CLI; immutable real-file URI attachments; draft recovery.",
-    "build": "NOT_RUN",
-    "cli": "NOT_RUN",
-    "xvfb_smoke": "NOT_RUN",
+    "build": "PASS: GTK3 Ubuntu 24.04 x86_64 native build.",
+    "cli": "PASS: platform acceptance and 5 common subprocess groups.",
+    "xvfb_smoke": "PASS: legacy draft copied without changing original; latest editor text via file URI; normal close flushed pending edit.",
     "x11_desktop_drag": "NOT_RUN",
     "wayland_desktop_drag": "NOT_RUN",
-    "blocker": "WSL and VirtualMachinePlatform installation require Windows restart; no distro. Docker server query timed out after 8 seconds; no restart performed.",
+    "blocker": null,
     "prepared_test": "Xvfb GTK URI receiver, latest editor drag, normal WM_DELETE_WINDOW close flushing a pending edit. Test fixture uses X11; this is not browser or Wayland acceptance.",
-    "legacy_data": "IMPLEMENTED: safe exclusive copy of historical pastedrop draft; source untouched, current draft wins; new edits can use separate recovery files on legacy read failure. Native test execution pending CI."
+    "legacy_data": "PASS: GUI smoke confirmed safe legacy copy; original retained.",
+    "status": "EXPERIMENTAL_NATIVE_CI_TESTED",
+    "clipboard": "Actual desktop clipboard NOT_RUN; stdin and argument/error paths passed."
   },
   "shared": {
     "shell_syntax": "Git Bash bash -n: PASS for all macOS/Linux shell scripts; not native compilation.",
     "browser_upload": "NOT_RUN on all platforms; destination must accept files and model/context limits still apply.",
-    "ci": "Public repository created. Native workflow execution pending first source push; no CI pass claimed yet.",
+    "ci": {
+      "status": "PASS",
+      "url": "https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38183554014",
+      "head_sha": "b7159478c010650c96c9dd2def2fdaab9e4e75bb",
+      "jobs": [
+        {
+          "name": "macos (macos-15-intel, x86_64)",
+          "conclusion": "success",
+          "html_url": "https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38183554014/job/114600995252"
+        },
+        {
+          "name": "linux",
+          "conclusion": "success",
+          "html_url": "https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38183554014/job/114600995460"
+        },
+        {
+          "name": "macos (macos-15, arm64)",
+          "conclusion": "success",
+          "html_url": "https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38183554014/job/114600995466"
+        },
+        {
+          "name": "windows",
+          "conclusion": "success",
+          "html_url": "https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38183554014/job/114600995494"
+        }
+      ]
+    },
     "package": "Explicit file allowlists; ZIP byte/integrity, local Markdown links, shell mode/LF, bounded privacy scan. Final hashes are in external SHA256SUMS.txt.",
-    "publication": "User explicitly authorized renaming, public source push, CI and v0.2.0-preview publication on 2026-10-12. Release pending validation.",
-    "decision": "Publish Windows preview after fresh tests/package checks; macOS/Linux assets only if corresponding native CI passes, always Experimental until desktop acceptance."
+    "publication": "Owner-authorized v0.2.0-preview release preparation; actual publication state is the live GitHub Releases page.",
+    "decision": "GO for Windows/source preview and explicitly Experimental Mac/Linux artifacts; no validated three-platform desktop-stable claim."
   },
   "project": "PromptSlip — Lightweight AI Prompt File Transfer"
 }

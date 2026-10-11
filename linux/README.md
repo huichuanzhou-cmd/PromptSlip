@@ -1,5 +1,7 @@
 # PromptSlip for Linux
 
+**Experimental.** Ubuntu 24.04 x86_64 CI passed GTK3 build, CLI and Xvfb URI drag/close-save checks. Real X11/Wayland desktop and browser acceptance remain unverified. [CI evidence](https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38183554014).
+
 PromptSlip is a small GTK 3 editor that exports the current text as an immutable `.md` or `.txt` file when you drag its file card. It keeps a local recoverable draft and does not access the network. GTK's URI-list drag target works with the desktop's native file drag protocol.
 
 ## Use a built release package

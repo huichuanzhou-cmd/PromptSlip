@@ -2,13 +2,11 @@
 
 ## 0.2.0-preview — 2026-10-12
 
-- Finalized the product and public repository name as **PromptSlip** and updated the bilingual product introduction to “Lightweight AI Prompt File Transfer.”
-- Added the public repository and Releases page as the download entry point; no release assets are published yet.
-- Clarified the 30-second Windows GUI flow, Markdown default and optional TXT output, local-only operation, and the boundary between creating an attachment and uploading it.
-- Recorded storage compatibility: existing Windows portable `数据/` and `文件/` remain beside the app, while the Windows CLI default is `Documents/PromptSlip/files`; changing that CLI default does not move or delete older `PasteDrop` data.
-- Kept legacy-draft safety and compatibility checks explicitly scoped by platform; macOS/Linux follow-up work still needs its own implementation evidence and native CI result.
-- Kept browser/service compatibility as an untested usage scenario, and preserved macOS/Linux preview and verification limits.
-- Updated historical naming, validation, download, and publication notes to distinguish prior evidence from the current documentation update. CI and newly built Windows binaries are not claimed as passing in this change.
+- Renamed PasteDrop to PromptSlip, including native GUI/CLI, metadata, scripts, archive names and bilingual documentation.
+- Preserved Windows portable data and added safe legacy-draft compatibility on macOS/Linux without deleting old files or replacing new drafts.
+- Passed native Windows, macOS Intel, macOS Apple Silicon and Linux CI; Linux Xvfb file drag/close-save also passed. Desktop/browser acceptance remains a separate unverified scope.
+- Fixed lipo argument ordering, GTK smoke quoting and macOS /var path-alias handling in the test fixture; retained containment checks and executable shell modes.
+- Prepared Windows/source preview assets, explicitly Experimental macOS/Linux assets and SHA-256 checksums.
 
 ## 0.2.0-preview — 2026-10-11
 
