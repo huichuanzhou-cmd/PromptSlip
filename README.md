@@ -6,6 +6,10 @@ Turn long AI prompts into real Markdown or TXT files you can drag into AI chats 
 
 **[Download Windows Preview](https://github.com/huichuanzhou-cmd/PromptSlip/releases)** · [Experimental macOS / Linux builds](https://github.com/huichuanzhou-cmd/PromptSlip/releases) · [简体中文](README.zh-CN.md) · [MIT License](LICENSE)
 
+![Copy a long prompt, paste into PromptSlip, and drag a Markdown file into a browser](https://raw.githubusercontent.com/huichuanzhou-cmd/PromptSlip/main/docs/assets/promptslip-demo.gif)
+
+20-second real capture: 18,070 characters of synthetic text → native Linux app → local Chrome receiver. The complete file and SHA-256 are verified. No private chats; this is not an AI-site compatibility test. [Capture verification](https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38232922071).
+
 **30-second start:** unzip the Windows package, open `PromptSlip.exe`, paste your text, then drag the file card into the destination's attachment area. Confirm that the file appears before sending. The current Windows GUI labels are in Simplified Chinese; English CLI help and documentation are provided.
 
 ## Why PromptSlip?
@@ -20,7 +24,7 @@ The destination must accept file uploads. Attachments do not increase a model's 
 | --- | --- | --- |
 | Windows | CI passed: GUI/CLI build, 19 core/GUI/CLI checks and 5 subprocess groups. Actual clipboard-to-CLI also passed locally. | Earlier PasteDrop GUI drag success is user-reported. Renamed-build mouse/browser upload acceptance not run. Requires system .NET Framework 4.x. |
 | macOS Intel + Apple Silicon | Both native CI hosts passed Universal build, both-slice checks, CLI and draft recovery/migration tests. | **Experimental.** AppKit desktop drag not tested; no Developer ID signing/notarization. Target macOS 11+, tested CI hosts macOS 15. |
-| Linux x86_64 | Ubuntu 24.04 CI passed GTK3 build, CLI and Xvfb file-URI drag/close-save smoke. | **Experimental.** Real X11/Wayland desktop/browser acceptance not run. GTK3/system dynamic libraries required; older distributions unverified. |
+| Linux x86_64 | Ubuntu 24.04 CI passed GTK3 build, CLI and Xvfb file-URI drag/close-save smoke. The demo verifies native GTK → Chrome file drag under Xvfb. | **Experimental.** Physical X11/Wayland desktops and AI-site uploads not tested. GTK3/system dynamic libraries required; older distributions unverified. |
 
 [Actual CI run](https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38183554014) · [Exact validation scope](docs/VALIDATION.md) · [Machine-readable record](verification.json)
 

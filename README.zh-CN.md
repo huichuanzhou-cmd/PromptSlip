@@ -6,6 +6,10 @@
 
 **[下载 Windows 预览版](https://github.com/huichuanzhou-cmd/PromptSlip/releases)** · [实验性 macOS／Linux 构建](https://github.com/huichuanzhou-cmd/PromptSlip/releases) · [English](README.md) · [MIT 许可证](LICENSE)
 
+![复制长提示词，粘贴到 PromptSlip，再把 Markdown 文件拖入浏览器](https://raw.githubusercontent.com/huichuanzhou-cmd/PromptSlip/main/docs/assets/promptslip-demo.gif)
+
+20 秒真实录制：18,070 字符合成文本 → Linux 原生程序 → 本地 Chrome 接收页。已核对全文和 SHA-256。无私人聊天；这不代表已验证具体 AI 网站兼容性。[录制验证](https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38232922071)。
+
 **30 秒上手：** 解压 Windows 包，打开 `PromptSlip.exe`，粘贴文本，把文件卡片拖到目标页面的附件区域，确认附件出现后发送。Windows 图形界面目前为简体中文，同时提供英文 CLI 帮助和文档。
 
 ## 为什么使用 PromptSlip？
@@ -20,7 +24,7 @@
 | --- | --- | --- |
 | Windows | CI 通过 GUI／CLI 编译、19 项 core／GUI／CLI 及 5 组子进程测试；本地实际剪贴板到 CLI 也通过。 | 旧 PasteDrop 拖放成功为用户报告；更名后真实鼠标／网页上传尚未验收。依赖系统 .NET Framework 4.x。 |
 | macOS Intel／Apple Silicon | 两台原生 CI 均通过 Universal 构建、双切片、CLI、草稿恢复及迁移测试。 | **实验性。** AppKit 桌面拖放未测；无 Developer ID 签名／公证。最低 11+ 为构建目标，CI 实际系统为 macOS 15。 |
-| Linux x86_64 | Ubuntu 24.04 CI 通过 GTK3 编译、CLI、Xvfb 文件 URI 拖放和关闭保存。 | **实验性。** 真实 X11／Wayland 桌面及浏览器尚未验收。需要 GTK3／系统动态库；旧发行版未验证。 |
+| Linux x86_64 | Ubuntu 24.04 CI 通过 GTK3 编译、CLI、Xvfb 文件 URI 拖放和关闭保存；演示另验证了 Xvfb 下 GTK 原生程序到 Chrome 的文件拖放。 | **实验性。** 物理 X11／Wayland 桌面及具体 AI 网站上传未验收。需要 GTK3／系统动态库；旧发行版未验证。 |
 
 [真实 CI](https://github.com/huichuanzhou-cmd/PromptSlip/actions/runs/38183554014) · [完整验证范围](docs/VALIDATION.md) · [机器可读记录](verification.json)
 
